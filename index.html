@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="BIG5">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Object Storage Service</title>
+</head>
+<body>
+    <h1>Object Storage Service</h1>
+    
+    <h2>File List</h2>
+    <ul>
+        {% for file in file_list %}
+            <li>
+                {{ file }}
+                <a href="{{ url_for('download_file', filename=file) }}">Download</a>
+                <button onclick="copyFileUrl('{{ url_for('uploaded_file', filename=file) }}')">Copy URL</button>
+                <a href="{{ url_for('delete_file', filename=file) }}">Delete</a>
+            </li>
+        {% endfor %}
+    </ul>
+
+    <h2>Upload File</h2>
+    <form action="{{ url_for('upload_file') }}" method="post" enctype="multipart/form-data">
+        <input type="file" name="file" id="fileInput" style="display:none" onchange="updateFileName()">
+        <button type="button" onclick="openFileExplorer()">Choose File</button>
+        <span id="fileName"></span>
+        <button type="submit">Upload</button>
+    </form>
+
+    <script>
+        function openFileExplorer() {
+            document.getElementById('fileInput').click();
+        }
+
+        function updateFileName() {
+            var fileName = document.getElementById('fileInput').value.split('\\').pop();
+            document.getElementById('fileName').innerText = fileName;
+        }
+
+        // 60秒刷新
+        setTimeout(function () {
+            window.location.reload();
+        }, 60000);
+
+        // 複製url
+        function copyFileUrl(url) {
+            var tempInput = document.createElement('input');
+            tempInput.value = url;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand('copy');
+            document.body.removeChild(tempInput);
+            alert('URL copied to clipboard: ' + url);
+        }
+    </script>
+</body>
+</html>
