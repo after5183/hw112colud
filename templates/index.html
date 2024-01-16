@@ -46,13 +46,11 @@
 
         // 複製url
         function copyFileUrl(url) {
-    // 獲取當前網頁的 link
+    // 結合當前網頁 link 與複製的 URL        
             var currentUrl = window.location.href;
-
-    // 結合當前網頁 link 與複製的 URL
             var combinedUrl = currentUrl + "\n" + url;
 
-    // 複製結合後的 URL 到剪貼板
+    // 複製結合後的 URL
             var tempInput = document.createElement('textarea');
             tempInput.value = combinedUrl;
             document.body.appendChild(tempInput);
@@ -60,7 +58,7 @@
             document.execCommand('copy');
             document.body.removeChild(tempInput);
 
-    // 提示用戶已複製
+    // 以訊息框顯示已複製
             alert('Combined URL copied to clipboard:\n' + combinedUrl);
 }
 
